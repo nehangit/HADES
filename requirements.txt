@@ -1,0 +1,7 @@
+langchain
+langgraph
+openai
+fireworks-ai
+playwright
+python-dotenv
+requests 
