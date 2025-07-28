@@ -1,12 +1,12 @@
-from langchain_openai import ChatOpenAI
+from langchain_fireworks import ChatFireworks
 from langchain.agents import initialize_agent, AgentType
 from agents.tools_registry import ALL_TOOLS
 from langchain_core.messages import HumanMessage
 import os
 
 class GenericWebHackingAgent:
-    def __init__(self, model="gpt-4o"):
-        self.llm = ChatOpenAI(model=model)
+    def __init__(self, model="accounts/fireworks/models/llama-v3p3-70b-instruct"):
+        self.llm = ChatFireworks(model=model)
         self.agent = initialize_agent(
             tools=ALL_TOOLS,
             llm=self.llm,

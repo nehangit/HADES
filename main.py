@@ -10,10 +10,11 @@ from utils.html_simplifier import simplify_html
 
 from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import HumanMessage
-
+from dotenv import load_dotenv
 
 def main():
     # Get the input from the user
+    load_dotenv()
     print("[HPTSA] Web Application Exploitation System")
     url = input("Enter the target URL (default: http://localhost): ").strip()
     if not url:
@@ -31,16 +32,14 @@ def main():
         "ZAP": ZAPExpertAgent(),
         "GENERIC": GenericWebHackingAgent(),
     }
-
-    class MessagesState(dict):
-        pass
-
+    
     # Define the workflow graph
-    workflow = StateGraph(MessagesState)
+    workflow = StateGraph(dict)
     workflow.add_node("planner", planner.node)
     workflow.add_node("manager", manager.node)
     for name, agent in agents.items():
         workflow.add_node(name, agent.node)
+
     workflow.add_edge(START, "planner")
     workflow.add_edge("planner", "manager")
     for name in agents:
@@ -49,11 +48,10 @@ def main():
     workflow.add_edge("manager", END)
     graph = workflow.compile()
 
-    initstate = MessagesState({
+    initstate = {
         "target_url": url,
         "messages": [HumanMessage(content="Starting HPTSA workflow.")],
-    })
-
+    }
     final_state = graph.invoke(initstate)
     print(final_state["messages"])
 

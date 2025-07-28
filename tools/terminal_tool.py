@@ -2,7 +2,7 @@ import subprocess
 
 def run_terminal_command(command: str) -> str:
     """
-    Run a shell command on the system and return its output.
+    Run any bash command on the Kali Linux terminal and return the full output (stdout and stderr). Use this to execute reconnaissance, exploitation, or interact with CLI tools like curl.
     Args:
         command (str): The shell command to run.
     Returns:
@@ -11,6 +11,9 @@ def run_terminal_command(command: str) -> str:
     print(f"[Tool] Running command: {command}")
     try:
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        return "Command output: " + result.stdout
+        if result.returncode == 0:
+            return "Command output: " + result.stdout
+        else:
+            return f"ERROR (code {result.returncode}): " + result.stderr
     except Exception as e:
-        return "ERROR: " + str(e) 
+        return f"TOOL ERROR: {str(e)}"

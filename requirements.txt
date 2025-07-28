@@ -1,7 +1,6 @@
 langchain
 langgraph
-openai
-fireworks-ai
 playwright
-python-dotenv
-requests 
+langchain-fireworks
+langchain_openai
+bs4

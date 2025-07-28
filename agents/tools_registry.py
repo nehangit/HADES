@@ -48,3 +48,19 @@ ALL_TOOLS = [
     write_file_tool,
     terminal_tool,
 ] 
+
+ALL_TOOLS_SQLMAP = [
+    playwright_tool,
+    read_file_tool,
+    write_file_tool,
+    terminal_tool,
+    sqlmap_tool,
+]
+
+ALL_TOOLS_ZAP = [
+    playwright_tool,
+    read_file_tool,
+    write_file_tool,
+    terminal_tool,
+    zap_tool,
+]

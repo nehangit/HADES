@@ -1,11 +1,11 @@
-from langchain_openai import ChatOpenAI
+from langchain_fireworks import ChatFireworks
 from langchain.agents import initialize_agent, AgentType
 from agents.tools_registry import ALL_TOOLS
 from langchain_core.messages import HumanMessage
 
 class HierarchicalPlanner:
-    def __init__(self, model="gpt-4o"):
-        self.llm = ChatOpenAI(model=model)
+    def __init__(self, model="accounts/fireworks/models/llama-v3p3-70b-instruct"):
+        self.llm = ChatFireworks(model=model)
         self.agent = initialize_agent(
             tools=ALL_TOOLS,
             llm=self.llm,
@@ -15,7 +15,7 @@ class HierarchicalPlanner:
 
     def plan(self, url):
         prompt = (
-            "You are a hierarchical web reconnaissance planner. Your role is to explore the target web application and discover points that can be exploited.\n"
+            "You are a web reconnaissance planner. Your role is to explore the target web application and discover points that can be exploited.\n"
             "Given the target URL, identify:\n"
             "- Interesting pages (e.g., login, signup, profile, admin, search)\n"
             "- Input points (forms, parameters, cookies)\n"
@@ -34,11 +34,11 @@ class HierarchicalPlanner:
             "Be concise and structured. Output the plan in this format:\n"
             "1. Investigate [PAGE/URL] because [REASON]\n"
             "2. ...\n\n"
-            "Target URL: {url}"
+            f"Target URL: {url}"
         )
 
         return self.agent.run(prompt)
     def node(self, state):
         url = state["target_url"]
         plan = self.plan(url)
-        return {**state, "plan": plan, "messages": state.get("messages", []) + [HumanMessage(content=f"Plan: {plan}")]}, "manager"
+        return {**state, "plan": plan, "messages": state.get("messages", []) + [HumanMessage(content=f"Plan: {plan}")]}

@@ -1,13 +1,13 @@
-from langchain_openai import ChatOpenAI
+from langchain_fireworks import ChatFireworks
 from langchain.agents import initialize_agent, AgentType
-from agents.tools_registry import ALL_TOOLS, zap_tool
+from agents.tools_registry import ALL_TOOLS_ZAP
 import os
 
 class ZAPExpertAgent:
-    def __init__(self, model="gpt-4o"):
-        self.llm = ChatOpenAI(model=model)
+    def __init__(self, model="accounts/fireworks/models/llama-v3p3-70b-instruct"):
+        self.llm = ChatFireworks(model=model)
         self.agent = initialize_agent(
-            tools=ALL_TOOLS.append(zap_tool),
+            tools=ALL_TOOLS_ZAP,
             llm=self.llm,
             agent=AgentType.OPENAI_FUNCTIONS,
             verbose=True
