@@ -1,4 +1,4 @@
-# Hierarchical Agent-Based Exploitation System (HABES)
+# Hierarchical Agent Driven Exploitation System (HADES)
 
 ## Overview
 
