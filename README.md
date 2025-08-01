@@ -1,10 +1,10 @@
-# Hierarchical Agent-Based Web Exploitation Framework
+# Hierarchical Agent-Based Exploitation System (HABES)
 
 ## Overview
 
 Based on HPTSA: https://arxiv.org/pdf/2406.01637
 
-A modular cybersecurity agent framework for web vulnerability exploitation (specifically zero-days). It consists of:
+A hierarchical multi-agent based autonomous system for web vulnerability recon and exploitation. It consists of:
 
 - A hierarchical planner for environment exploration and task planning
 - A team manager for orchestrating task-specific agents
@@ -21,7 +21,7 @@ A modular cybersecurity agent framework for web vulnerability exploitation (spec
 
 ## Setup
 
-1. Install dependencies:
+1. Install dependencies (in a virtual environment):
    ```bash
    pip install -r requirements.txt
    playwright install
@@ -38,5 +38,4 @@ A modular cybersecurity agent framework for web vulnerability exploitation (spec
 
 ## Notes
 
-- Ensure Playwright browsers are installed (`playwright install`)
-- ZAP and sqlmap must be installed and available in your PATH for their respective agents
+- zap.sh and sqlmap must be installed and available in your PATH for their respective agents
