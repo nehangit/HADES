@@ -1,8 +1,5 @@
 import os
-
-# Anchor the sandbox directory relative to this script's location
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-SANDBOX_ROOT = os.path.join(THIS_DIR, "..", "agent_workspace")
+from config import SANDBOX_ROOT
 
 # Ensure the directory exists
 os.makedirs(SANDBOX_ROOT, exist_ok=True)

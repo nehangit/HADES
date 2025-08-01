@@ -2,3 +2,4 @@
 venv/
 *.pyc
 agent_workspace/
+compose/config

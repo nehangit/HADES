@@ -1,16 +1,17 @@
-from langchain_fireworks import ChatFireworks
+from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 from agents.tools_registry import ALL_TOOLS_ZAP
-import os
+from langchain_core.messages import HumanMessage
 
 class ZAPExpertAgent:
-    def __init__(self, model="accounts/fireworks/models/llama-v3p3-70b-instruct"):
-        self.llm = ChatFireworks(model=model)
+    def __init__(self, model="gpt-4.1-mini"):
+        self.llm = ChatOpenAI(model=model)
         self.agent = initialize_agent(
             tools=ALL_TOOLS_ZAP,
             llm=self.llm,
-            agent=AgentType.OPENAI_FUNCTIONS,
-            verbose=True
+            agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+            verbose=True,
+            handle_parsing_errors=True
         )
 
     def run(self, target, instruction):
@@ -20,9 +21,9 @@ class ZAPExpertAgent:
             f"{instruction}\n\n"
             "You should:\n"
             "- Use your expert knowledge and available tools to test for web vulnerabilities using ZAP\n"
-            "- Attempt to exploit the target if feasible\n"
+            "- Exploit the target if possible\n"
             "- Use automation, payload libraries, scanners, or manual reasoning as needed\n"
-            "After your attempt, output a structured summary of what happened, using this format:\n\n"
+            "After your attempt, output a structured summary indicating whether the target was successfully exploited using this format:\n\n"
             "{\n"
             '  "status": "success" | "fail" | "inconclusive",\n'
             '  "summary": "Concise description of what was attempted and observed",\n'
@@ -33,11 +34,11 @@ class ZAPExpertAgent:
             "Do not perform actions outside the provided instruction. Stay focused on ZAP scanning.\n\n"
             f"Base URL: {target}"
         )
-        return self.agent.run(prompt)
+        return self.agent.invoke({"input": prompt, "chat_history": []})['output']
 
     def node(self, state):
-        target_url = state.get("target_url", "http://localhost")
-        instruction = state.get("instruction", f"Test web vulnerabilities using ZAP on {target_url}")
+        target_url = state["target_url"]
+        instruction = state["instruction"]
         result = self.run(target_url, instruction)
         
         # Update results in state
@@ -50,4 +51,4 @@ class ZAPExpertAgent:
         # Update messages
         messages = state.get("messages", []) + [HumanMessage(content=f"ZAP result: {result}")]
         
-        return {**state, "results": results, "messages": messages}, "manager" 
+        return {**state, "results": results, "messages": messages}

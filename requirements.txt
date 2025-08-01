@@ -4,3 +4,5 @@ playwright
 langchain-fireworks
 langchain_openai
 bs4
+python-dotenv
+pydantic

@@ -1,4 +1,5 @@
 import subprocess
+from config import SANDBOX_ROOT
 
 def run_zap_scan(
     target_url: str,
@@ -29,7 +30,7 @@ def run_zap_scan(
             cmd.append("-quickpassive")
 
         # Run zap.sh command and capture stdout and stderr
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_sec)
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=SANDBOX_ROOT, timeout=timeout_sec)
 
         if result.returncode != 0:
             return f"[ZAP ERROR] {result.stderr.strip()}"

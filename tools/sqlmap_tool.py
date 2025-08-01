@@ -1,4 +1,5 @@
 from typing import Optional
+from config import SANDBOX_ROOT
 import subprocess
 
 def run_sqlmap_scan(
@@ -15,7 +16,7 @@ def run_sqlmap_scan(
 
     Args:
         target_url (str): The full URL to test for SQL injection.
-        method (str, optional): HTTP method to use (e.g., GET, POST).
+        method (str, optional): HTTP method to use.
         data (str, optional): POST body (if applicable).
         cookie (str, optional): Cookie string to include.
         level (int, optional): Testing level (1–5). Higher is more aggressive.
@@ -37,7 +38,7 @@ def run_sqlmap_scan(
         command.append("--dump")
 
     try:
-        result = subprocess.run(command, capture_output=True, text=True, timeout=300)
+        result = subprocess.run(command, capture_output=True, text=True, cwd=SANDBOX_ROOT, timeout=300)
         return result.stdout if result.returncode == 0 else result.stderr
     except Exception as e:
         return f"TOOL ERROR: {str(e)}"
