@@ -1,5 +1,15 @@
 # Hierarchical Agent Driven Exploitation System (HADES)
 
+⚠️ DISCLAIMER
+
+This project is intended strictly for use in **controlled environments** such as penetration testing labs, Capture The Flag (CTF) platforms, or legally authorized security research.
+
+**Do not use this software against any system or target without proper authorization.**
+
+The authors and contributors are not responsible for any misuse or damage caused by this tool. Use of this project is entirely at your own risk.
+
+By using this tool, you agree to comply with all applicable laws and ethical guidelines in your jurisdiction.
+
 ## Overview
 
 Based on HPTSA: https://arxiv.org/pdf/2406.01637
@@ -8,7 +18,7 @@ A hierarchical multi-agent based autonomous system for web vulnerability recon a
 
 - A hierarchical planner for environment exploration and task planning
 - A team manager for orchestrating task-specific agents
-- A set of expert agents (SQLi, XSS, CSRF, SSTI, ZAP, Generic) for exploiting specific vulnerabilities
+- A set of expert agents (SQLi, XSS, CSRF, SSTI, ZAP, Generic) for exploiting specific web vulnerabilities
 
 ## Components
 
